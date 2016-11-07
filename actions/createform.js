@@ -20,7 +20,7 @@ var task = function(request, callback){
 	var s3Form = new S3Form(policy);
 	//4. get bucket name
 
-	policy.getConditions().push({ "x-amz-meta-uploader": os.hostname() });
+	policy.getConditions().push({ "x-amz-meta-uploader": request.connection.remoteAddress });
 	hiddenFields = s3Form.generateS3FormFields();
 	hiddenFields = s3Form.addS3CredientalsFields(hiddenFields, awsConfig);
 
