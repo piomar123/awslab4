@@ -6,19 +6,25 @@ var AWS_CONFIG_FILE = "config.json";
 var POLICY_FILE = "policy.json";
 var INDEX_TEMPLATE = "index.ejs";
 var os = require("os");
+var AWS = require('aws-sdk');
+
+AWS.config.loadFromPath('./config.json');
+var simpleLogger = require('../simpleLogger.js');
 
 var task = function(request, callback){
-	//1. load configuration
+	// log GET action
+	simpleLogger.info('S3 form requested', {client: request.connection.remoteAddress});
+
+	// load configuration
 	var awsConfig = helpers.readJSONFile(AWS_CONFIG_FILE);
 	var policyData = helpers.readJSONFile(POLICY_FILE);
 	var hiddenFields = [];
 
-	//2. prepare policy
+	// prepare policy
 	var policy = new Policy(policyData);
 
-	//3. generate form fields for S3 POST
+	// generate form fields for S3 POST
 	var s3Form = new S3Form(policy);
-	//4. get bucket name
 
 	policy.getConditions().push({ "x-amz-meta-uploader": request.connection.remoteAddress });
 	hiddenFields = s3Form.generateS3FormFields();
