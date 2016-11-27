@@ -1,0 +1,44 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/custom.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" type="text/javascript"></script>
+	<title>PSOiR AWS SimpleDB logs</title>
+</head>
+<body>
+	<nav class="navbar">
+
+	</nav>
+	<div class="container">
+		<section id="section1" class="panel panel-default">
+
+			<div class="panel-heading">
+				<h3 class="panel-title">Logs</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table-hover table-condensed">
+						<tr><th>Timestamp</th><th>Level</th><th>Message</th><th>Details</th></tr>
+							<% entries.forEach(function(entry){ %>
+							<tr>
+								<td><%= entry.timestamp %></td>
+								<td><%= entry.level %></td>
+								<td><%= entry.message %></td>
+								<% delete entry.timestamp; delete entry.level; delete entry.message; delete entry.id; %>
+								<td><%= JSON.stringify(entry) %></td>
+							</tr>
+							<% }); %>
+						</table>
+					</div>
+				</div>
+			<footer class="panel-footer">
+
+			</footer>
+		</section>
+	</div>
+</body>
+</html>
