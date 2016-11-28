@@ -29,7 +29,6 @@ var afterLogFunc = function(err, logParams){
 		console.log(logParams);
 		return;
 	}
-	console.log(logParams);
 };
 
 var log = function(level, message, details){

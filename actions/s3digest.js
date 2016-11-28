@@ -2,8 +2,8 @@ var AWS = require("aws-sdk");
 var helpers = require("../helpers.js");
 
 AWS.config.loadFromPath('./config.json');
-
 var s3 = new AWS.S3();
+var simpleLogger = require('../simpleLogger.js');
 
 var task =  function(request, next){
 	var reqParams = {
@@ -12,6 +12,17 @@ var task =  function(request, next){
 	};
 
 	var showDigests = function(err, digests) {
+		var logData = {
+			client: request.connection.remoteAddress,
+			s3bucket: reqParams.Bucket,
+			s3key: reqParams.Key
+		};
+		digests.forEach(function(hash){
+			var arr = hash.split(':');
+			logData[arr[0]] = arr[1].trim();
+		});
+		simpleLogger.info('S3 file hash calculated', logData);
+
 		next(null, digests.join("<br>") + "<hr>");
 	};
 

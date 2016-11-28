@@ -29,7 +29,9 @@
 								<td><%= entry.level %></td>
 								<td><%= entry.message %></td>
 								<% delete entry.timestamp; delete entry.level; delete entry.message; delete entry.id; %>
-								<td><%= JSON.stringify(entry) %></td>
+								<td><% Object.keys(entry).forEach(function(key){ %>
+								<b><%= key %>:</b><%= entry[key] %><br/><% }); %>
+								</td>
 							</tr>
 							<% }); %>
 						</table>
