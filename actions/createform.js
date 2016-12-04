@@ -13,7 +13,7 @@ var simpleLogger = require('../simpleLogger.js');
 
 var task = function(request, callback){
 	// log GET action
-	simpleLogger.info('S3 form requested', {client: request.connection.remoteAddress});
+	simpleLogger.info('S3 upload form requested', {client: request.connection.remoteAddress});
 
 	// load configuration
 	var awsConfig = helpers.readJSONFile(AWS_CONFIG_FILE);
