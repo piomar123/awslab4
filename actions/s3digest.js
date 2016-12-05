@@ -14,7 +14,7 @@ var task =  function(request, next){
 		Key: request.query.key,
 	};
 
-	var afterSendToSQS = function(err, data) {
+	var afterSentToSQS = function(err, data) {
 		if(err){
 			return next(err);
 		}
@@ -23,10 +23,6 @@ var task =  function(request, next){
 			s3bucket: reqParams.Bucket,
 			s3key: reqParams.Key
 		};
-		// digests.forEach(function(hash){
-		// 	var arr = hash.split(':');
-		// 	logData[arr[0]] = arr[1].trim();
-		// });
 		simpleLogger.info('S3 file hash calculation requested to SQS', logData);
 		next(null, "File " + request.query.key + " saved in bucket " + request.query.bucket);
 	};
@@ -43,7 +39,7 @@ var task =  function(request, next){
 				s3key: { DataType: "String", StringValue: reqParams.Key }
 			}
     },
-    afterSendToSQS
+    afterSentToSQS
   );
 	//s3.getObject(reqParams, calcDigests);
 }
